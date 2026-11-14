@@ -79,7 +79,7 @@ img { max-width: 100%; display: block; }
 .powered strong { color: var(--text); font-weight: 600; font-size: 15px; letter-spacing: -0.05em; }
 
 /* Header */
-.header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: saturate(1.4) blur(12px); }
+.header { position: sticky; top: 0; z-index: 10; background: var(--bg); }
 .header .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
 .nav { display: flex; align-items: center; gap: 26px; font-size: 15px; color: var(--label); }
 .nav a:hover { color: var(--text); }
@@ -297,8 +297,7 @@ section { scroll-margin-top: 80px; }
   .hero-phones .back { animation: float 7s ease-in-out -3.5s infinite; }
   @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
 
-  .card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--brand) 35%, var(--ring)); }
-  .card:hover .icon-pill { scale: 1.08; }
+  .hover-card.on .icon-pill { scale: 1.08; }
   .icon-pill { transition: scale 0.3s cubic-bezier(0.3, 1.6, 0.5, 1); }
 
   /* The free-trial tick pulses once on load. */
@@ -306,4 +305,19 @@ section { scroll-margin-top: 80px; }
   @keyframes pop { from { scale: 0; } to { scale: 1; } }
 }
 
-.grid > .reveal, .grid > .reveal > .card { height: 100%; }
+
+/* Feature cards with a gliding highlight */
+.hover-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin: -8px; }
+.hover-cell { position: relative; padding: 8px; }
+.hover-bg { position: absolute; inset: 0; border-radius: 32px; background: var(--brand-tint); display: block; }
+.hover-card {
+  position: relative; z-index: 1; height: 100%;
+  background: var(--surface); border: 1px solid var(--ring); border-radius: var(--radius-card);
+  padding: 28px; display: flex; flex-direction: column; gap: 10px;
+  transition: border-color 0.25s ease;
+}
+.hover-card.on { border-color: color-mix(in srgb, var(--brand) 40%, var(--ring)); }
+.hover-card:focus-visible { outline-offset: 2px; border-radius: var(--radius-card); }
+.hover-card p { margin: 0; color: var(--text-2); font-size: 15px; }
+@media (max-width: 900px) { .hover-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .hover-grid { grid-template-columns: 1fr; } }

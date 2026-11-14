@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AndroidIcon, AppleIcon, PoweredByFolioo, Wordmark } from "@/components/brand";
 import { Phone } from "@/components/phone";
 import { Reveal } from "@/components/reveal";
+import { HoverCards } from "@/components/hover-cards";
 import { ANDROID_URL, FOLIOO_PRICING } from "@/lib/links";
 
 function Tick() {
@@ -154,21 +155,7 @@ export default function Home() {
               <span className="eyebrow">Built for the job</span>
               <h2>Simple on the surface. Solid underneath<span className="dot">.</span></h2>
             </div></Reveal>
-            <div className="grid">
-              {features.map((f, i) => (
-                <Reveal key={f.title} delay={(i % 3) * 90}>
-                <div className="card">
-                  <span className="icon-pill">
-                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d={f.icon} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                  <h3>{f.title}</h3>
-                  <p>{f.body}</p>
-                </div>
-                </Reveal>
-              ))}
-            </div>
+            <Reveal><HoverCards items={features} /></Reveal>
           </div>
         </section>
 
