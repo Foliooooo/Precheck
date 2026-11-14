@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Bell, Check, Clock3, RefreshCw, ShieldCheck, Smartphone, Users } from "lucide-react";
 import { AndroidIcon, AppleIcon, PoweredByFolioo, Wordmark } from "@/components/brand";
 import { Phone } from "@/components/phone";
 import { Reveal } from "@/components/reveal";
@@ -6,11 +7,7 @@ import { HoverCards } from "@/components/hover-cards";
 import { ANDROID_URL, FOLIOO_PRICING } from "@/lib/links";
 
 function Tick() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="m6 12.5 4 4L18 8" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  return <Check size={16} strokeWidth={2.4} aria-hidden="true" />;
 }
 
 function DownloadButtons({ size = "" }: { size?: string }) {
@@ -59,12 +56,12 @@ const steps = [
 ];
 
 const features = [
-  { title: "Works offline", body: "Jobs and scans are saved on the phone and upload by themselves when you're back online.", icon: "M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4" },
-  { title: "Proof you can trust", body: "Each photo gets a fingerprint linked to the one before, so a changed or swapped photo shows up.", icon: "M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6l-7-3Zm-3 9 2 2 4-4" },
-  { title: "Alerts when it matters", body: "Get a notification when a photo check is skipped or a photo fails its check.", icon: "M6 9a6 6 0 1 1 12 0c0 6 2 7 2 7H4s2-1 2-7Zm4 11a2 2 0 0 0 4 0" },
-  { title: "Team optional", body: "Use it on your own. When you need help, share a one-time code. People you invite join free.", icon: "M16 19v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1m17 0v-1a4 4 0 0 0-3-3.9M13 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm3-3.4a3.5 3.5 0 0 1 0 6.8" },
-  { title: "You decide how long", body: "Keep proof photos for 90 days up to 3 years. The record of each check stays after the photo goes.", icon: "M12 7v5l3 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" },
-  { title: "Made for one hand", body: "Big buttons near your thumb, clear steps, and a dark mode for early starts and late shifts.", icon: "M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm3 15h2" },
+  { title: "Works offline", body: "Jobs and scans are saved on the phone and upload by themselves when you're back online.", icon: <RefreshCw size={20} strokeWidth={1.8} aria-hidden="true" /> },
+  { title: "Proof you can trust", body: "Each photo gets a fingerprint linked to the one before, so a changed or swapped photo shows up.", icon: <ShieldCheck size={20} strokeWidth={1.8} aria-hidden="true" /> },
+  { title: "Alerts when it matters", body: "Get a notification when a photo check is skipped or a photo fails its check.", icon: <Bell size={20} strokeWidth={1.8} aria-hidden="true" /> },
+  { title: "Team optional", body: "Use it on your own. When you need help, share a one-time code. People you invite join free.", icon: <Users size={20} strokeWidth={1.8} aria-hidden="true" /> },
+  { title: "You decide how long", body: "Keep proof photos for 90 days up to 3 years. The record of each check stays after the photo goes.", icon: <Clock3 size={20} strokeWidth={1.8} aria-hidden="true" /> },
+  { title: "Made for one hand", body: "Big buttons near your thumb, clear steps, and a dark mode for early starts and late shifts.", icon: <Smartphone size={20} strokeWidth={1.8} aria-hidden="true" /> },
 ];
 
 const faqs = [
@@ -96,7 +93,7 @@ export default function Home() {
           <div className="wrap">
             <div className="hero-copy">
               <span className="eyebrow rise"><PoweredByFolioo /></span>
-              <h1 className="rise d1">Checklists that prove the work got done<span className="dot">.</span></h1>
+              <h1 className="rise d1">Checklists that <span className="hl">prove the work</span> got done<span className="dot">.</span></h1>
               <p className="lede rise d2">
                 <b>Say what the job is.</b> PreCheck writes the steps, asks for a photo only where it matters, and keeps time-stamped proof you can share.
               </p>
