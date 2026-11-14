@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AndroidIcon, AppleIcon, PoweredByFolioo, Wordmark } from "@/components/brand";
 import { Phone } from "@/components/phone";
+import { Reveal } from "@/components/reveal";
 import { ANDROID_URL, FOLIOO_PRICING } from "@/lib/links";
 
 function Tick() {
@@ -116,14 +117,15 @@ export default function Home() {
 
         <section id="how" className="section">
           <div className="wrap">
-            <div className="section-head">
+            <Reveal><div className="section-head">
               <span className="eyebrow">How it works</span>
               <h2>From a sentence to signed-off proof<span className="dot">.</span></h2>
               <p className="lede">Four steps, all on your phone. Most jobs are set up in under a minute.</p>
-            </div>
+            </div></Reveal>
             <div className="steps">
               {steps.map((s, i) => (
-                <article className="step" key={s.title}>
+                <Reveal key={s.title}>
+                <article className="step">
                   <div className="step-copy">
                     <span className="step-num">{i + 1}</span>
                     <h3>{s.title}</h3>
@@ -140,6 +142,7 @@ export default function Home() {
                     ))}
                   </div>
                 </article>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -147,13 +150,14 @@ export default function Home() {
 
         <section id="features" className="section" style={{ paddingTop: 0 }}>
           <div className="wrap">
-            <div className="section-head">
+            <Reveal><div className="section-head">
               <span className="eyebrow">Built for the job</span>
               <h2>Simple on the surface. Solid underneath<span className="dot">.</span></h2>
-            </div>
+            </div></Reveal>
             <div className="grid">
-              {features.map((f) => (
-                <div className="card" key={f.title}>
+              {features.map((f, i) => (
+                <Reveal key={f.title} delay={(i % 3) * 90}>
+                <div className="card">
                   <span className="icon-pill">
                     <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
                       <path d={f.icon} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -162,6 +166,7 @@ export default function Home() {
                   <h3>{f.title}</h3>
                   <p>{f.body}</p>
                 </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -169,25 +174,25 @@ export default function Home() {
 
         <section className="section" style={{ paddingTop: 0 }}>
           <div className="wrap split">
-            <div className="section-head" style={{ marginBottom: 0 }}>
+            <Reveal><div className="section-head" style={{ marginBottom: 0 }}>
               <span className="eyebrow">Light and dark</span>
               <h2>Easy to read at 6 am or at midnight<span className="dot">.</span></h2>
               <p className="lede">PreCheck follows your phone&apos;s theme, with high-contrast text and large touch targets in both.</p>
-            </div>
-            <div className="phones">
+            </div></Reveal>
+            <Reveal className="phones-reveal"><div className="phones">
               <Phone src="/screens/run-dark.png" alt="A job in dark mode" />
               <Phone src="/screens/saved.png" alt="Proof saved after a live scan" />
-            </div>
+            </div></Reveal>
           </div>
         </section>
 
         <section id="pricing" className="section" style={{ paddingTop: 24 }}>
           <div className="wrap">
-            <div className="section-head">
+            <Reveal><div className="section-head">
               <span className="eyebrow">Pricing</span>
               <h2>Try it free. Keep it with Folioo<span className="dot">.</span></h2>
-            </div>
-            <div className="plans">
+            </div></Reveal>
+            <Reveal><div className="plans">
               <div className="plan featured">
                 <span className="tag brand">Start here</span>
                 <div className="price">Free <span>for 7 days</span></div>
@@ -208,16 +213,16 @@ export default function Home() {
                 </ul>
                 <a className="btn btn-secondary" href={FOLIOO_PRICING}>See Folioo plans</a>
               </div>
-            </div>
+            </div></Reveal>
           </div>
         </section>
 
         <section className="section" style={{ paddingTop: 24 }}>
           <div className="wrap">
-            <div className="section-head" style={{ marginBottom: 16 }}>
+            <Reveal><div className="section-head" style={{ marginBottom: 16 }}>
               <span className="eyebrow">Questions</span>
               <h2>Good to know<span className="dot">.</span></h2>
-            </div>
+            </div></Reveal>
             <div className="faq">
               {faqs.map((f, i) => (
                 <div key={f.q}>

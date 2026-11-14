@@ -17,7 +17,6 @@
   --success-tint: #ecfdf3;
   --dot: rgba(25, 25, 25, 0.16);
   --phone: #111113;
-  --shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.22), 0 8px 20px -10px rgba(0, 0, 0, 0.12);
   --sec-top: #fafafa;
   --sec-bottom: #eeeeee;
   --sec-outline: #d4d4d4;
@@ -47,7 +46,6 @@
     --success-tint: #12261a;
     --dot: rgba(244, 244, 245, 0.14);
     --phone: #000;
-    --shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.7), 0 8px 20px -10px rgba(0, 0, 0, 0.5);
     --sec-top: #26262b;
     --sec-bottom: #1f1f23;
     --sec-outline: #3a3a41;
@@ -107,9 +105,10 @@ h3 { font-size: 20px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 5
 .btn-primary {
   color: #fff;
   background: linear-gradient(180deg, #7777ff 0%, #5c5cff 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.44), inset 0 -3px 0 #3e3ebc, 0 10px 24px -12px rgba(92, 92, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.44), inset 0 -3px 0 #3e3ebc;
 }
-.btn-primary:hover { filter: brightness(1.05); }
+.btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.btn-secondary:not([aria-disabled="true"]):hover { transform: translateY(-1px); }
 .btn-secondary {
   color: var(--text);
   background: linear-gradient(180deg, var(--sec-top), var(--sec-bottom));
@@ -144,8 +143,8 @@ h3 { font-size: 20px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 5
 .fineprint .tick { color: var(--success); }
 .hero-phones { position: relative; height: 620px; }
 .hero-phones .phone { position: absolute; width: 270px; }
-.hero-phones .back { right: 0; top: 52px; transform: rotate(5deg); }
-.hero-phones .front { left: 8%; top: 0; transform: rotate(-3deg); z-index: 2; }
+.hero-phones .back { right: 0; top: 52px; rotate: 5deg; }
+.hero-phones .front { left: 8%; top: 0; rotate: -3deg; z-index: 2; }
 @media (max-width: 900px) {
   .hero { padding-top: 32px; }
   .hero .wrap { grid-template-columns: 1fr; }
@@ -163,7 +162,7 @@ h3 { font-size: 20px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 5
   background: var(--phone);
   border-radius: 44px;
   padding: 9px;
-  box-shadow: var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--ring);
 }
 .phone img { border-radius: 36px; width: 100%; height: auto; background: #fff; }
 
@@ -206,6 +205,7 @@ section { scroll-margin-top: 80px; }
 /* Feature grid */
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .card {
+  transition: border-color 0.25s ease, transform 0.25s ease;
   background: var(--surface); border: 1px solid var(--ring); border-radius: var(--radius-card);
   padding: 28px; display: flex; flex-direction: column; gap: 10px;
 }
@@ -268,3 +268,42 @@ section { scroll-margin-top: 80px; }
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 }
 @media (prefers-reduced-motion: reduce) { .glow { animation: none; } }
+
+/* ---------- Motion ---------- */
+/* Hidden until revealed only when scripts run, so the page reads fine without them. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Step phones slide up one after the other. */
+  .reveal .step-shots .phone { opacity: 0; translate: 0 48px; transition: opacity 0.9s ease, translate 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .reveal.in .step-shots .phone { opacity: 1; translate: 0 0; }
+  .reveal.in .step-shots .phone + .phone { transition-delay: 0.18s; }
+
+  /* Ticks draw themselves. */
+  .reveal .points path { stroke-dasharray: 20; stroke-dashoffset: 20; transition: stroke-dashoffset 0.6s ease 0.35s; }
+  .reveal.in .points path { stroke-dashoffset: 0; }
+  .reveal.in .points li:nth-child(2) path { transition-delay: 0.5s; }
+  .reveal.in .points li:nth-child(3) path { transition-delay: 0.65s; }
+
+  /* Step number lands with a small pop. */
+  .reveal .step-num { scale: 0.6; opacity: 0; transition: scale 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) 0.15s, opacity 0.3s ease 0.15s; }
+  .reveal.in .step-num { scale: 1; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero phones float gently, out of step with each other. */
+  .hero-phones .front { animation: float 7s ease-in-out infinite; }
+  .hero-phones .back { animation: float 7s ease-in-out -3.5s infinite; }
+  @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+
+  .card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--brand) 35%, var(--ring)); }
+  .card:hover .icon-pill { scale: 1.08; }
+  .icon-pill { transition: scale 0.3s cubic-bezier(0.3, 1.6, 0.5, 1); }
+
+  /* The free-trial tick pulses once on load. */
+  .fineprint .tick { display: inline-flex; animation: pop 0.6s cubic-bezier(0.3, 1.6, 0.5, 1) 0.9s both; }
+  @keyframes pop { from { scale: 0; } to { scale: 1; } }
+}
+
+.grid > .reveal, .grid > .reveal > .card { height: 100%; }
