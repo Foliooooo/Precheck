@@ -10,6 +10,23 @@ function Tick() {
   return <Check size={16} strokeWidth={2.4} aria-hidden="true" />;
 }
 
+/** Headline words that rise out of a mask one after another (once, on load). */
+function Words({ children, from }: { children: string; from: number }) {
+  const words = children.split(" ");
+  return (
+    <>
+      {words.map((w, i) => (
+        <span key={i}>
+          <span className="w" aria-hidden="true">
+            <span style={{ "--i": from + i } as React.CSSProperties}>{w}</span>
+          </span>
+          {i < words.length - 1 ? " " : null}
+        </span>
+      ))}
+    </>
+  );
+}
+
 function DownloadButtons({ size = "" }: { size?: string }) {
   return (
     <div className="ctas">
@@ -93,7 +110,12 @@ export default function Home() {
           <div className="wrap">
             <div className="hero-copy">
               <span className="eyebrow rise"><PoweredByFolioo /></span>
-              <h1 className="rise d1">Checklists that <span className="hl">prove the work</span> got done<span className="dot">.</span></h1>
+              <h1 className="headline" aria-label="Checklists that prove the work got done.">
+                <Words from={0}>Checklists that</Words>{" "}
+                <span className="hl"><Words from={2}>prove the work</Words></span>{" "}
+                <Words from={5}>got done</Words>
+                <span className="dot" aria-hidden="true">.</span>
+              </h1>
               <p className="lede rise d2">
                 <b>Say what the job is.</b> PreCheck writes the steps, asks for a photo only where it matters, and keeps time-stamped proof you can share.
               </p>
