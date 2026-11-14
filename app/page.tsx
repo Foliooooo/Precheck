@@ -4,6 +4,7 @@ import { AndroidIcon, AppleIcon, PoweredByFolioo, Wordmark } from "@/components/
 import { Phone } from "@/components/phone";
 import { Reveal } from "@/components/reveal";
 import { HoverCards } from "@/components/hover-cards";
+import { ThemeSwitch } from "@/components/theme-switch";
 import { ANDROID_URL, FOLIOO_PRICING } from "@/lib/links";
 
 function Tick() {
@@ -99,6 +100,7 @@ export default function Home() {
             <a className="hide-sm" href="#how">How it works</a>
             <a className="hide-sm" href="#features">Features</a>
             <a className="hide-sm" href="#pricing">Pricing</a>
+            <ThemeSwitch className="hide-xs" />
             <a className="btn btn-primary btn-sm" href={ANDROID_URL}>Get the app</a>
           </nav>
         </div>
@@ -269,6 +271,7 @@ export default function Home() {
           </div>
           <div className="footer-row">
             <PoweredByFolioo />
+            <ThemeSwitch />
             <span className="copy">© {new Date().getFullYear()} Folioo. All rights reserved.</span>
           </div>
         </div>

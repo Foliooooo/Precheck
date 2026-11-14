@@ -32,8 +32,36 @@
   color-scheme: light;
 }
 
+/* Dark: chosen in the switcher, or following the system when no choice is saved. */
+:root[data-theme="dark"] {
+  --bg: #0f0f11;
+  --surface: #18181b;
+  --muted: #1f1f23;
+  --track: #26262b;
+  --ring: #303036;
+  --dash: #34343a;
+  --emboss: transparent;
+  --text: #f4f4f5;
+  --text-2: #a1a1aa;
+  --body: #d4d4d8;
+  --label: #c4c4cc;
+  --subtle: #a1a1aa;
+  --brand-text: #a5a5ff;
+  --brand-tint: #1f1f3a;
+  --success: #4ade80;
+  --success-tint: #12261a;
+  --dot: rgba(244, 244, 245, 0.14);
+  --phone: #000;
+  --sec-top: #26262b;
+  --sec-bottom: #1f1f23;
+  --sec-outline: #3a3a41;
+  --sec-edge: #111113;
+  --sec-hover: #2c2c32;
+  --sec-highlight: #ffffff14;
+  color-scheme: dark;
+}
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0f0f11;
     --surface: #18181b;
     --muted: #1f1f23;
@@ -67,6 +95,7 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   margin: 0;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -129,29 +158,41 @@ h3 { font-size: 20px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 5
 
 /* Buttons: beveled, pill-shaped */
 .btn {
+  position: relative; isolation: isolate;
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   height: 54px; padding: 0 26px; border-radius: 999px; font-size: 16px; font-weight: 500;
   border: 1px solid transparent; cursor: pointer; white-space: nowrap; letter-spacing: -0.015em;
-  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
+  transition: box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
 }
+/* Gradients can't animate, so hover and press fade a colour layer in over the base gradient.
+   It stops short of the bevel so the light top edge and darker lower edge stay visible. */
+.btn::before {
+  content: ""; position: absolute; z-index: -1; inset: 1px 0 3px; border-radius: inherit;
+  background: var(--btn-hover, transparent); opacity: 0;
+  transition: opacity var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  pointer-events: none;
+}
+.btn:hover::before, .btn:focus-visible::before { opacity: 1; }
+.btn:active::before { opacity: 1; background: var(--btn-press, var(--btn-hover)); }
 .btn-primary {
+  --btn-hover: #5c5cff; --btn-press: #4d4de4;
   color: #fff;
   border-color: rgba(92, 92, 255, 0.8);
   background: linear-gradient(to bottom, #7777ff, #5c5cff);
   box-shadow: inset 0 1px 0 #ffffff70, inset 0 -3px 0 #3e3ebc;
 }
-.btn-primary:hover { background: #5c5cff; }
-.btn-primary:active { background: #4d4de4; box-shadow: inset 0 2px 4px #00000026; }
-.btn-secondary:not([aria-disabled="true"]):hover { background: var(--sec-hover); }
-.btn-secondary:not([aria-disabled="true"]):active { box-shadow: inset 0 2px 4px #00000026; }
+.btn-primary:active { box-shadow: inset 0 2px 4px #00000026, inset 0 -1px 0 #3e3ebc; }
 .btn-secondary {
+  --btn-hover: var(--sec-hover); --btn-press: var(--sec-hover);
   color: var(--text);
   border-color: var(--sec-outline);
   background: linear-gradient(to bottom, var(--sec-top), var(--sec-bottom));
   box-shadow: inset 0 1px 0 var(--sec-highlight), inset 0 -2px 0 var(--sec-outline);
 }
+.btn-secondary:not([aria-disabled="true"]):active { box-shadow: inset 0 2px 4px #00000026; }
+.btn[aria-disabled="true"]::before { display: none; }
+.nav a, .footer-links a { transition: color var(--dur) var(--ease); }
 .btn[aria-disabled="true"] { cursor: default; color: var(--text-2); }
-.btn[aria-disabled="true"]:active { transform: none; }
 .btn small { font-size: 12px; font-weight: 500; padding: 3px 9px; border-radius: 999px; background: var(--track); color: var(--label); }
 .btn-sm { height: 42px; padding: 0 18px; font-size: 15px; }
 .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -345,3 +386,16 @@ section { scroll-margin-top: 80px; }
 .hover-card p { margin: 0; color: var(--text-2); font-size: 15px; }
 @media (max-width: 900px) { .hover-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .hover-grid { grid-template-columns: 1fr; } }
+
+/* Theme switcher: three flat icon buttons with a sliding indicator */
+.theme { position: relative; display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: var(--track); }
+.theme button {
+  position: relative; width: 32px; height: 30px; border: 0; padding: 0; border-radius: 999px; cursor: pointer;
+  background: transparent; color: var(--text-2); display: grid; place-items: center;
+  transition: color var(--dur) var(--ease);
+}
+.theme button:hover { color: var(--text); }
+.theme button[aria-checked="true"] { color: var(--text); }
+.theme .knob { position: absolute; inset: 0; border-radius: 999px; background: var(--surface); border: 1px solid var(--ring); z-index: 0; }
+.theme svg { position: relative; z-index: 1; }
+@media (max-width: 520px) { .hide-xs { display: none !important; } }
