@@ -5,6 +5,7 @@ import { Phone } from "@/components/phone";
 import { Reveal } from "@/components/reveal";
 import { HoverCards } from "@/components/hover-cards";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { ApkInfo } from "@/components/apk-info";
 import { ANDROID_URL, FOLIOO_PRICING } from "@/lib/links";
 
 function Tick() {
@@ -31,7 +32,7 @@ function Words({ children, from }: { children: string; from: number }) {
 function DownloadButtons({ size = "" }: { size?: string }) {
   return (
     <div className="ctas">
-      <a className={`btn btn-primary ${size}`} href={ANDROID_URL}>
+      <a className={`btn btn-primary ${size}`} href={ANDROID_URL} download>
         <AndroidIcon />
         Download for Android
       </a>
@@ -39,6 +40,7 @@ function DownloadButtons({ size = "" }: { size?: string }) {
         <AppleIcon />
         iPhone <small>Coming soon</small>
       </span>
+      <ApkInfo />
     </div>
   );
 }
@@ -87,6 +89,7 @@ const faqs = [
   { q: "Do I need a team?", a: "No. Most people use PreCheck on their own. If you want others to run your workflows, invite them with a one-time code whenever you like." },
   { q: "Does it work without signal?", a: "Yes. Jobs, steps and photo checks work offline and are saved on your phone. Proof uploads by itself once you're connected again." },
   { q: "Who can see my photos?", a: "Only you and the people in your team, plus anyone you send a report link to. Links expire when you choose, and you can turn them off at any time." },
+  { q: "How do I install it on Android?", a: "Tap Download for Android and open the file. If your phone asks, allow your browser to install apps, then tap Install. When a new version is out, PreCheck tells you inside the app." },
   { q: "Is there an iPhone app?", a: "Not yet. PreCheck is on Android today, and the iPhone app is coming soon." },
 ];
 
@@ -101,7 +104,7 @@ export default function Home() {
             <a className="hide-sm" href="#features">Features</a>
             <a className="hide-sm" href="#pricing">Pricing</a>
             <ThemeSwitch className="hide-xs" />
-            <a className="btn btn-primary btn-sm" href={ANDROID_URL}>Get the app</a>
+            <a className="btn btn-primary btn-sm" href={ANDROID_URL} download>Get the app</a>
           </nav>
         </div>
       </header>

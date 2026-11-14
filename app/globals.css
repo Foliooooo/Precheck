@@ -205,7 +205,9 @@ h3 { font-size: 20px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 5
 .btn[aria-disabled="true"] { cursor: default; color: var(--text-2); }
 .btn small { font-size: 12px; font-weight: 500; padding: 3px 9px; border-radius: 999px; background: var(--track); color: var(--label); }
 .btn-sm { height: 42px; padding: 0 18px; font-size: 15px; }
-.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.apk-info { flex-basis: 100%; margin: 2px 0 0; font-size: 13px; color: var(--text-2); }
+.final .apk-info { text-align: center; }
 @media (max-width: 480px) { .ctas .btn { width: 100%; } }
 
 /* Dashed rule */

@@ -1,3 +1,3 @@
-/** Where "Download for Android" goes. Set NEXT_PUBLIC_ANDROID_URL at build time to point elsewhere. */
-export const ANDROID_URL = process.env.NEXT_PUBLIC_ANDROID_URL || "https://play.google.com/store/apps/details?id=com.folioo.precheck";
+/** Where "Download for Android" goes: the latest signed build on this site. NEXT_PUBLIC_ANDROID_URL overrides it. */
+export const ANDROID_URL = process.env.NEXT_PUBLIC_ANDROID_URL || "/download/precheck.apk";
 export const FOLIOO_PRICING = "https://folioo.tech/pricing";
